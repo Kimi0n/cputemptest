@@ -1,0 +1,26 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+div {
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.values {
+  background-color: #DDD;
+  margin: 0.2em;
+  display: inline-block;
+  width: 8em;
+}
+
+.varnum {
+  font-size: 2em;
+}

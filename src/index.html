@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>CPU Test</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <div>
+      <div class='values' id='cpuvalue'>
+        <p>CPU Usage</p>
+        <p class='varnum' id='cpu-usage'>0%</p>
+      </div>
+
+      <div class='values'>
+        <p>Memory Usage</p>
+        <p class='varnum' id='mem-usage'>0%</p>
+      </div>
+
+      <div class='values'>
+        <p>Memory Amount</p>
+        <p class='varnum' id='mem-amount'>0GB</p>
+      </div>
+    </div>
+
+    <script>
+      const electron = require('electron');
+      const ipcRenderer = electron.ipcRenderer;
+      const anime = require('animejs');
+
+      let systemNumbers = {
+        cpuP: 0,
+        memP: 0
+      };
+    
+      ipcRenderer.on('cpu', (event, data) => {
+        var cpuElement = document.querySelector('#cpu-usage');
+        anime({
+          targets: cpuElement,
+          innerHTML: [systemNumbers.cpuP + "%", Math.ceil(data) + "%"],
+          round: 1,
+          easing: 'easeInOutSine'
+        });
+        systemNumbers.cpuP = Math.ceil(data);
+      });
+
+      ipcRenderer.on('mem', (event, data) => {
+        var memElement = document.querySelector('#mem-usage');
+        anime({
+          targets: memElement,
+          innerHTML: [systemNumbers.memP + "%", Math.ceil(data) + "%"],
+          round: 1,
+          easing: 'easeInOutSine'
+        });
+        systemNumbers.memP = Math.ceil(data);
+      });
+
+      ipcRenderer.on('mem-amount', (event, data) => {
+        document.getElementById('mem-amount').innerHTML = Math.ceil(data) + "GB";
+      });
+      </script>
+  </body>
+</html>
